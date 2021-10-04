@@ -1,4 +1,17 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
+const sauceRoutes = require("./routes/sauce");
+const userRoutes = require("./routes/user");
+
+mongoose
+  .connect(
+    "mongodb+srv://rom1v:HnlKh99kRr8OIvUC@cluster0.th9mo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Connexion à MongoDB réussie !"))
+  .catch((er) => console.log("Connexion à MongoDB échouée !", er));
+
 const app = express();
 //Initialise l'API pour recevoir des requêtes de n'importe où
 app.use((req, res, next) => {
@@ -17,14 +30,12 @@ app.use((req, res, next) => {
 //Permet de récupérer des données de formulaire au format json
 app.use(express.json());
 
-//Chemin de création de compte
-app.post("/api/auth/signup", (req, res, next) => {
-    console.log(req.body);
-  res.status(201).json({ message: "objet enregistré" });
-});
-
+//Affiche dans le terminal que l'appli est bien lancé
 app.listen(3000, (req, res, next) => {
   console.log("appli lancée");
 });
+
+app.use("/api/sauces", sauceRoutes);
+app.use("/api/auth", userRoutes); //route attendu par le frontend
 
 module.exports = app;
