@@ -1,3 +1,8 @@
+require("dotenv").config();
+const host = process.env.DB_HOST;
+const username = process.env.DB_USER;
+const password = process.env.DB_PASS;
+
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -8,7 +13,8 @@ const userRoutes = require("./routes/user");
 
 mongoose
   .connect(
-    "mongodb+srv://rom1v:HnlKh99kRr8OIvUC@cluster0.th9mo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongodb+srv://" + username + ":" + password + "@" + host,
+    //"mongodb+srv://rom1v:HnlKh99kRr8OIvUC@cluster0.th9mo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
