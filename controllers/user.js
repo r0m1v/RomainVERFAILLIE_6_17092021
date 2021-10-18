@@ -1,5 +1,7 @@
 /* CREER DES UTILISATEURS */
 
+require("dotenv").config();
+const randomToken = process.env.JWT_SECRET_TOKEN;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -41,7 +43,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+            token: jwt.sign({ userId: user._id }, randomToken, {
               expiresIn: "24h",
             }),
           });
